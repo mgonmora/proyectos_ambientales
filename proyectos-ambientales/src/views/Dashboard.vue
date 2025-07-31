@@ -1,5 +1,5 @@
 <script setup>
-import IngresadosAprobados from '../components/dashboard/ingresadosAprobados/Ingresadosaprobados.vue'
+import IngresadosAprobados from '../components/dashboard/ingresadosAprobados/IngresadosAprobados.vue'
 import Inversion from '../components/dashboard/inversion/Inversion.vue'
 import TiempoTramitacion from '../components/dashboard/tiempoTramitacion/TiempoTramitacion.vue'
 import RegionFilter from '../components/regionFilter/RegionFilter.vue';
