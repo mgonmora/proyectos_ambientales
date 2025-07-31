@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import { computed } from "vue";
 import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
