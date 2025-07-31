@@ -2,6 +2,20 @@
 
 Este proyecto es una aplicación desarrollada con **Vue 3**, **Vuetify 3** y **Chart.js**, destinada a visualizar indicadores relacionados con proyectos ambientales, tales como tiempo de tramitación, estado de aprobación y distribución geográfica por región y tipo de proyecto.
 
+# Requisitos Previos
+Antes de ejecutar este proyecto, tener instalado lo siguiente:
+
+Node.js (recomendado: versión 18.x o superior)
+npm (viene junto con Node.js)
+
+## Instrucciones de instalación
+
+# 1. Instalar dependencias
+npm install
+
+# 2. Ejecutar en modo desarrollo
+npm run dev
+
 ## 🧩 Tecnologías usadas
 
 - **Vue 3**: Framework progresivo para la construcción de interfaces.
