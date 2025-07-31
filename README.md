@@ -5,7 +5,7 @@ Este proyecto es una aplicación desarrollada con **Vue 3**, **Vuetify 3** y **C
 # Requisitos Previos
 Antes de ejecutar este proyecto, tener instalado lo siguiente:
 
-Node.js (recomendado: versión 18.x o superior)
+Node.js (Vite necesita Node v20.19.0 o superior, o bien Node 22.12.0+.)
 npm (viene junto con Node.js)
 
 # Instrucciones de instalación
@@ -21,7 +21,7 @@ npm run dev
 - **Vue 3**: Framework progresivo para la construcción de interfaces.
 - **Vuetify 3**: Framework de componentes UI basado en Material Design.
 - **Chart.js** + **vue-chartjs**: Librería para la creación de gráficos interactivos.
-- **Vite**: Herramienta de desarrollo rápida para Vue.
+- **Vite**: Herramienta de desarrollo rápida para Vue. 
 - **JavaScript moderno** con `<script setup>` y composición reactiva.
 
 # 📊 Funcionalidades implementadas
