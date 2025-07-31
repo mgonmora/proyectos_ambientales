@@ -8,15 +8,15 @@ Antes de ejecutar este proyecto, tener instalado lo siguiente:
 Node.js (recomendado: versión 18.x o superior)
 npm (viene junto con Node.js)
 
-## Instrucciones de instalación
+# Instrucciones de instalación
 
-# 1. Instalar dependencias
+## 1. Instalar dependencias
 npm install
 
-# 2. Ejecutar en modo desarrollo
+## 2. Ejecutar en modo desarrollo
 npm run dev
 
-## 🧩 Tecnologías usadas
+# 🧩 Tecnologías usadas
 
 - **Vue 3**: Framework progresivo para la construcción de interfaces.
 - **Vuetify 3**: Framework de componentes UI basado en Material Design.
@@ -24,7 +24,7 @@ npm run dev
 - **Vite**: Herramienta de desarrollo rápida para Vue.
 - **JavaScript moderno** con `<script setup>` y composición reactiva.
 
-## 📊 Funcionalidades implementadas
+# 📊 Funcionalidades implementadas
 
 - Visualización de gráficos de barra (horizontal y vertical).
 - Filtros por región con selección de "Todas las regiones" por defecto.
@@ -36,7 +36,8 @@ npm run dev
 - Oculta datos con fechas inválidas o tiempos de tramitación <= 0.
 - Media query para ocultar fondos en pantallas móviles.
 
-## 🎨 Diseño y UI
+# 🎨 Diseño y UI
 
 - Basado en la paleta **Teal** (`bg-teal-darken-3`) de Vuetify similar a los colores corporativos de DSS.
+- Se usaron colores legibles y que tengan buen contraste
 
