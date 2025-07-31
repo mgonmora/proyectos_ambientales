@@ -2,6 +2,8 @@
 
 Este proyecto es una aplicación desarrollada con **Vue 3**, **Vuetify 3** y **Chart.js**, destinada a visualizar indicadores relacionados con proyectos ambientales, tales como tiempo de tramitación, estado de aprobación y distribución geográfica por región y tipo de proyecto.
 
+LINK DE LA DEMO: https://proyectos-ambientales.vercel.app/
+
 # Requisitos Previos
 Antes de ejecutar este proyecto, tener instalado lo siguiente:
 
