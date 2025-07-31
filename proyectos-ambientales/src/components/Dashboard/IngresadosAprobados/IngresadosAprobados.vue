@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { Bar } from 'vue-chartjs'
+import { ref, computed, watch } from "vue";
+import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
   Title,
@@ -9,82 +9,157 @@ import {
   BarElement,
   CategoryScale,
   LinearScale,
-} from 'chart.js'
+} from "chart.js";
 
-// Registramos los componentes de Chart.js que se usarán
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-// 🔹 Datos de ejemplo (puedes reemplazarlos con props o API)
-const proyectos = ref([
-  { fecha: '2021-04-10', estado: 'Aprobado' },
-  { fecha: '2021-06-11', estado: 'Pendiente' },
-  { fecha: '2022-02-12', estado: 'Aprobado' },
-  { fecha: '2022-09-05', estado: 'Aprobado' },
-  { fecha: '2023-03-14', estado: 'Pendiente' },
-  { fecha: '2023-04-20', estado: 'Aprobado' },
-])
+const props = defineProps({
+  proyectos: {
+    type: Array,
+    default: () => [],
+  },
+});
 
-// 🔹 Agrupar y contar por año
+function parseDMY(fechaStr) {
+  if (!fechaStr) return null;
+  const partes = fechaStr.split("-");
+  if (partes.length !== 3) return null;
+  const dia = partes[0];
+  const mes = partes[1];
+  const año = partes[2];
+  const fechaIso = `${año}-${mes}-${dia}`;
+  const fecha = new Date(fechaIso);
+  return isNaN(fecha) ? null : fecha;
+}
+
+function formatDMY(date) {
+  if (!date) return "";
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const dd = day < 10 ? "0" + day : "" + day;
+  const mm = month < 10 ? "0" + month : "" + month;
+  return `${dd}-${mm}-${year}`;
+}
+
+const proyectosProcesados = computed(() => {
+  return props.proyectos.map((p) => ({
+    ...p,
+    dateObj: parseDMY(p.fecha),
+  }));
+});
+
 const resumenPorAño = computed(() => {
-  const resumen = {}
-
-  proyectos.value.forEach(p => {
-    const año = new Date(p.fecha).getFullYear()
-
-    if (!resumen[año]) {
-      resumen[año] = { ingresados: 0, aprobados: 0 }
+  const agrupado = {};
+  proyectosProcesados.value.forEach((p) => {
+    if (p.dateObj) {
+      const año = p.dateObj.getFullYear();
+      if (!agrupado[año]) {
+        agrupado[año] = { ingresados: 0, aprobados: 0, ejemplo: p.dateObj };
+      }
+      agrupado[año].ingresados++;
+      if (p.estado === "Aprobado") {
+        agrupado[año].aprobados++;
+      }
     }
+  });
+  return agrupado;
+});
 
-    resumen[año].ingresados++
-    if (p.estado === 'Aprobado') resumen[año].aprobados++
-  })
-
-  return resumen
-})
-
-// 🔹 Preparar datos para el gráfico
 const chartData = computed(() => {
-  const años = Object.keys(resumenPorAño.value).sort()
+  const años = Object.keys(resumenPorAño.value);
+  años.sort((a, b) => Number(a) - Number(b));
+  const ingresadosData = [];
+  const aprobadosData = [];
+  for (let i = 0; i < años.length; i++) {
+    const año = años[i];
+    ingresadosData.push(resumenPorAño.value[año].ingresados);
+    aprobadosData.push(resumenPorAño.value[año].aprobados);
+  }
   return {
     labels: años,
     datasets: [
       {
-        label: 'Ingresados',
-        backgroundColor: '#42A5F5',
-        data: años.map(año => resumenPorAño.value[año].ingresados),
+        label: "Ingresados",
+        backgroundColor: "#FF8A65",
+        borderColor: "#FF7043",
+        borderWidth: 1.5,
+        data: ingresadosData,
       },
       {
-        label: 'Aprobados',
-        backgroundColor: '#66BB6A',
-        data: años.map(año => resumenPorAño.value[año].aprobados),
+        label: "Aprobados",
+        backgroundColor: "#4DB6AC",
+        borderColor: "#009688",
+        borderWidth: 1.5,
+        data: aprobadosData,
       },
     ],
-  }
-})
+  };
+});
 
 const chartOptions = {
   responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Año",
+          color: "#333",
+          font: { weight: "bold", size: 14 },
+        },
+      },
+    },
   plugins: {
     legend: {
-      position: 'top',
+      position: "top",
+      labels: {
+        color: "#333",
+        font: { weight: "bold" },
+      },
     },
     title: {
       display: true,
-      text: 'Proyectos Ingresados vs Aprobados por Año',
+      text: "Proyectos Ingresados vs Aprobados por Año",
+      color: "#222",
+      font: { size: 18, weight: "bold" },
+      padding: { top: 10, bottom: 25 },
+    },
+    tooltip: {
+      backgroundColor: "#2c3e50",
+      titleColor: "#ecf0f1",
+      bodyColor: "#ecf0f1",
+      borderColor: "#34495e",
+      borderWidth: 1,
+      padding: 10,
+      cornerRadius: 5,
+      callbacks: {
+        title: function (tooltipItems) {
+          const dato = tooltipItems[0];
+          const año = dato.label;
+          const fechaEjemplo = resumenPorAño.value[año].ejemplo;
+          const textoFecha = fechaEjemplo ? formatDMY(fechaEjemplo) : "";
+          return "Fecha: " + textoFecha;
+        },
+        label: function (tooltipItem) {
+          const año = tooltipItem.label;
+          const dataAño = resumenPorAño.value[año];
+          return [
+            "Ingresados: " + dataAño.ingresados,
+            "Aprobados: " + dataAño.aprobados,
+          ];
+        },
+      },
     },
   },
-}
+};
 </script>
-
 <template>
-  <v-card class="pa-4">
-    <v-card-title class="text-h6">Ingresados y Aprobados por Año</v-card-title>
+  <v-card class="pa-4 responsive-card">
     <v-card-text>
-      <Bar :data="chartData" :options="chartOptions" />
+      <div class="chart-background">
+        <Bar :data="chartData" :options="chartOptions" />
+      </div>
     </v-card-text>
   </v-card>
 </template>
-
-<style scoped>
-/* Estilos opcionales */
-</style>
