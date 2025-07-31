@@ -17,7 +17,6 @@ Este proyecto es una aplicación desarrollada con **Vue 3**, **Vuetify 3** y **C
 - Agrupación de datos por año y tipo de proyecto.
 - Cálculo automático del tiempo de tramitación de los proyectos (días entre `fecha` y `fecha_resolucion`).
 - Gráficos adaptables (responsive) que se ajustan a pantalla de escritorio, tablet y móvil.
-- Opción de **pantalla completa** en los gráficos.
 - Imagen de fondo con opacidad en los gráficos.
 - Tooltip personalizado para los valores del gráfico.
 - Oculta datos con fechas inválidas o tiempos de tramitación <= 0.
@@ -25,11 +24,5 @@ Este proyecto es una aplicación desarrollada con **Vue 3**, **Vuetify 3** y **C
 
 ## 🎨 Diseño y UI
 
-- Basado en la paleta **Teal** (`bg-teal-darken-3`) de Vuetify.
-- Se utiliza una gama de colores armónicos para los datasets, como:
-  - Deep Orange `#FF7043`
-  - Amber `#FFC107`
-  - Indigo `#3F51B5`
-  - Light Blue `#29B6F6`
-  - Grey `#9E9E9E`
-  - Lime `#CDDC39`
+- Basado en la paleta **Teal** (`bg-teal-darken-3`) de Vuetify similar a los colores corporativos de DSS.
+
